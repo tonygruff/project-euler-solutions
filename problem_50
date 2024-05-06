@@ -1,0 +1,51 @@
+#Project Euler Problem 50 Solution
+
+#Written in SageMath using the SageMathCell
+
+#---------------------------------------------------------------------------------------------------------------
+
+primes = Primes()
+
+limit = 1000000
+
+p_arr = []
+
+for i in [1..limit]:
+    if i.is_prime():
+        p_arr.append(i)
+
+max_len = 0
+
+s = 0
+
+for i in range(len(p_arr)):
+    s = s + p_arr[i]
+    
+    if s < limit:
+        max_len = max_len + 1
+    else:
+        break
+
+print(max_len)
+
+for i in [1..max_len]:
+    found = 0
+    k_len = (max_len+1) - i
+    
+    sub_lim = floor(len(p_arr)/k_len)
+    
+    for j in [0..sub_lim]:
+        p_sum = 0
+        
+        for m in [j..(k_len+j)]:
+            p_sum = p_sum + p_arr[m]
+            
+        if p_sum > limit:
+            break
+        else:
+            if p_sum.is_prime():
+                found = 1
+                print([p_sum,k_len+1])
+                break
+    if found == 1:
+        break
