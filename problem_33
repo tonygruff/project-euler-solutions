@@ -1,0 +1,84 @@
+#Project Euler Problem 33 Solution
+
+#Written in R using RStudio
+
+#Functions---------------------------------------------------------------------------------------------------------------
+
+countDigits = function(n){
+  return(floor(log10(abs(n))) + 1)
+}
+
+reverseVector = function(v){
+  reverseV = c()
+  
+  for(i in 1:length(v)){
+    reverseV[i] = as.integer(v[length(v) - i + 1])
+  }
+  
+  return(reverseV)
+}
+
+numToVect = function(n){
+  v = 1:countDigits(n)
+  
+  for(i in v){
+    v[i] = as.integer(n %% 10)
+    
+    n = (n - n %% 10)/10
+  }
+  
+  return(reverseVector(v))
+}
+
+#Solution-------------------------------------------------------
+
+a = 12L
+b = 21L
+
+v1 = numToVect(a)
+v2 = numToVect(b)
+
+v3 = intersect(v1,v2)
+v3
+length(intersect(v1,v2))
+
+v1 = v1[-which(v1 == v3[1])]
+v2 = v2[-which(v2 == v3[1])]
+
+
+s = c()
+
+index = 0
+
+for(i in 10:99){
+  iVect = numToVect(i)
+  if(i %% 10 == 0 || iVect[1] == iVect[2]){
+    next
+  }
+  
+  for(j in 10:99){
+    jVect = numToVect(j)
+    if((j %% 10 == 0 || i >= j) || jVect[1] == jVect[2]){
+      next
+    }
+    iVect = numToVect(i)
+    
+    v = intersect(iVect,jVect)
+    
+    if(length(v) == 1){
+      
+      iVect = iVect[-which(iVect == v[1])]
+      jVect = jVect[-which(jVect == v[1])]
+      
+      if(i/j == iVect[1]/jVect[1]){
+        print(i)
+        print(j)
+        index = index + 1
+        s[index] = i/j
+      }
+    }
+  }
+}
+
+prod(s)
+
