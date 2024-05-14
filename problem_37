@@ -1,0 +1,51 @@
+#Project Euler Problem 37 Solution
+
+#Written in R using RStudio
+
+#Functions---------------------------------------------------------------------------------------------------------------
+
+isTruncPrimeFromRight = function(p){
+  if(is_prime(p) && p < 8){
+    return(TRUE)
+  }
+  
+  if(is_prime(floor(p/10))){
+    return(isTruncPrimeFromRight(floor(p/10)))
+  } else {
+    return(FALSE)
+  }
+}
+
+isTruncPrimeFromLeft = function(p){
+  if(is_prime(p) && p < 8){
+    return(TRUE)
+  }
+  
+  power = floor(log10(p))
+  newP = p - floor(p/10^power)*10^power
+  
+  if(is_prime(newP)){
+    return(isTruncPrimeFromLeft(newP))
+  } else {
+    return(FALSE)
+  }
+}
+
+#Solution-------------------------------------------------------
+
+n = 23
+
+count = 0
+
+s = 0
+
+while(count < 11){
+  if(is_prime(n) && isTruncPrimeFromRight(n) && isTruncPrimeFromLeft(n)){
+    count = count + 1
+    s = s + n
+  }
+  
+  n = n + 2
+}
+
+print(s)
