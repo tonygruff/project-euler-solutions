@@ -2,7 +2,21 @@
 
 #Written in R using RStudio
 
-#---------------------------------------------------------------------------------------------------------------
+#Functions---------------------------------------------------------------------------------------------------------------
+
+countDigits = function(n){
+  return(floor(log10(abs(n))) + 1)
+}
+
+reverseVector = function(v){
+  reverseV = c()
+  
+  for(i in 1:length(v)){
+    reverseV[i] = as.integer(v[length(v) - i + 1])
+  }
+  
+  return(reverseV)
+}
 
 numToVect = function(n){
   v = 1:countDigits(n)
@@ -16,7 +30,7 @@ numToVect = function(n){
   return(reverseVector(v))
 }
 
-#-------------------------------------------------------
+#Solution-------------------------------------------------------
 
 values = c()
 index = 0
