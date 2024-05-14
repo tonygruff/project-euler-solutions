@@ -1,0 +1,85 @@
+#Project Euler Problem 38 Solution
+
+#Written in R using RStudio
+
+#Functions---------------------------------------------------------------------------------------------------------------
+
+countDigits = function(n){
+  return(floor(log10(abs(n))) + 1)
+}
+
+reverseVector = function(v){
+  reverseV = c()
+  
+  for(i in 1:length(v)){
+    reverseV[i] = as.integer(v[length(v) - i + 1])
+  }
+  
+  return(reverseV)
+}
+
+numToVect = function(n){
+  v = 1:countDigits(n)
+  
+  for(i in v){
+    v[i] = as.integer(n %% 10)
+    
+    n = (n - n %% 10)/10
+  }
+  
+  return(reverseVector(v))
+}
+
+vectToNum = function(v){
+  newV = reverseVector(v)
+  
+  n = 0
+  
+  for(i in 1:length(newV)){
+    n = n + newV[i] * 10^(i-1)
+  }
+  
+  return(n)
+}
+
+isNPandigital = function(k, n){
+  v = c()
+  
+  for(i in 1:n){
+    v[i] = i
+  }
+  
+  kVect = sort(numToVect(k))
+  
+  return(identical(kVect,v))
+}
+
+#Solution-------------------------------------------------------
+
+maxPan = 0
+
+for(i in 1:9999){
+  lim = min(5,floor(9/countDigits(i)))
+  
+  if(0 %in% numToVect(i)){
+    next
+  }
+  
+  for(n in 2:lim){
+    m = i
+    for(k in 2:n){
+      v = numToVect(m)
+      v = c(v,numToVect(i*k))
+      m = vectToNum(v)
+    }
+    
+    if(isNPandigital(m,9) && maxPan < m){
+      maxPan = m
+      print(i)
+      print(lim)
+    }
+  }
+}
+
+maxPan
+
