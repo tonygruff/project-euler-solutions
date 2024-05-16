@@ -1,0 +1,45 @@
+#Project Euler Problem 40 Solution
+
+#Written in R using RStudio
+
+#Functions---------------------------------------------------------------------------------------------------------------
+
+countDigits = function(n){
+  return(floor(log10(abs(n))) + 1)
+}
+
+reverseVector = function(v){
+  reverseV = c()
+  
+  for(i in 1:length(v)){
+    reverseV[i] = as.integer(v[length(v) - i + 1])
+  }
+  
+  return(reverseV)
+}
+
+numToVect = function(n){
+  v = 1:countDigits(n)
+  
+  for(i in v){
+    v[i] = as.integer(n %% 10)
+    
+    n = (n - n %% 10)/10
+  }
+  
+  return(reverseVector(v))
+}
+
+#Solution-------------------------------------------------------
+
+v = c()
+k = 1
+
+while(length(v) < 1000000){
+  v = c(v,numToVect(k))
+  
+  k = k+1
+}
+
+v[1]*v[10]*v[100]*v[1000]*v[10000]*v[100000]*v[1000000]
+
