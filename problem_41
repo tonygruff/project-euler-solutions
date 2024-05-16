@@ -1,0 +1,58 @@
+#Project Euler Problem 41 Solution
+
+#Written in R using RStudio
+
+#Functions---------------------------------------------------------------------------------------------------------------
+
+countDigits = function(n){
+  return(floor(log10(abs(n))) + 1)
+}
+
+reverseVector = function(v){
+  reverseV = c()
+  
+  for(i in 1:length(v)){
+    reverseV[i] = as.integer(v[length(v) - i + 1])
+  }
+  
+  return(reverseV)
+}
+
+numToVect = function(n){
+  v = 1:countDigits(n)
+  
+  for(i in v){
+    v[i] = as.integer(n %% 10)
+    
+    n = (n - n %% 10)/10
+  }
+  
+  return(reverseVector(v))
+}
+
+isNPandigital = function(k, n){
+  v = c()
+  
+  for(i in 1:n){
+    v[i] = i
+  }
+  
+  kVect = sort(numToVect(k))
+  
+  return(identical(kVect,v))
+}
+
+#Solution-------------------------------------------------------
+
+maxP = 0
+
+for(i in 7612345:7654321){
+  if(is_prime(i) && isNPandigital(i,7)){
+    if(maxP < i){
+      maxP = i
+    }
+  }
+}
+
+print(maxP)
+
