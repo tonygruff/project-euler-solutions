@@ -1,0 +1,19 @@
+#Project Euler Problem 45 Solution
+
+#Written in R using RStudio
+
+#Solution-------------------------------------------------------
+
+for(i in 10000:100000){
+  if(i %% 2 == 0){
+    next
+  }
+  
+  test = (1/6)*(1+sqrt(12*i^2+12*i+1))
+  
+  if(test %% 1 == 0){
+    print(i)
+    print(test)
+    print((i+1)/2)
+  }
+}
